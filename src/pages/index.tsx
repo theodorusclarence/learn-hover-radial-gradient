@@ -1,66 +1,88 @@
+import clsx from 'clsx';
 import * as React from 'react';
 
 import Layout from '@/components/layout/Layout';
-import ArrowLink from '@/components/links/ArrowLink';
-import ButtonLink from '@/components/links/ButtonLink';
 import UnderlineLink from '@/components/links/UnderlineLink';
-import UnstyledLink from '@/components/links/UnstyledLink';
 import Seo from '@/components/Seo';
 
-/**
- * SVGR Support
- * Caveat: No React Props Type.
- *
- * You can override the next-env if the type is important to you
- * @see https://stackoverflow.com/questions/68103844/how-to-override-next-js-svg-module-declaration
- */
-import Vercel from '~/svg/Vercel.svg';
-
-// !STARTERCONF -> Select !STARTERCONF and CMD + SHIFT + F
-// Before you begin editing, follow all comments with `STARTERCONF`,
-// to customize the default configuration.
-
 export default function HomePage() {
+  const cardsRef = React.useRef<Array<HTMLDivElement | null>>([]);
+
+  const onMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    cardsRef.current.forEach((cardRef) => {
+      if (!cardRef) return;
+
+      const rect = cardRef.getBoundingClientRect();
+
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      cardRef.style.setProperty('--cursorX', `${x}px`);
+      cardRef.style.setProperty('--cursorY', `${y}px`);
+    });
+  };
+
   return (
     <Layout>
-      {/* <Seo templateTitle='Home' /> */}
       <Seo />
 
       <main>
-        <section className='bg-white'>
-          <div className='layout relative flex min-h-screen flex-col items-center justify-center py-12 text-center'>
-            <Vercel className='text-5xl' />
-            <h1 className='mt-4'>
-              Next.js + Tailwind CSS + TypeScript Starter
-            </h1>
-            <p className='mt-2 text-sm text-gray-800'>
-              A starter for Next.js, Tailwind CSS, and TypeScript with Absolute
-              Import, Seo, Link component, pre-configured with Husky{' '}
-            </p>
-            <p className='mt-2 text-sm text-gray-700'>
-              <ArrowLink href='https://github.com/theodorusclarence/ts-nextjs-tailwind-starter'>
-                See the repository
-              </ArrowLink>
-            </p>
-
-            <ButtonLink className='mt-6' href='/components' variant='light'>
-              See all components
-            </ButtonLink>
-
-            <UnstyledLink
-              href='https://vercel.com/new/git/external?repository-url=https%3A%2F%2Fgithub.com%2Ftheodorusclarence%2Fts-nextjs-tailwind-starter'
-              className='mt-4'
+        <section className='bg-[#070a09]'>
+          <div className='layout relative flex min-h-screen flex-col items-center justify-center py-12 text-center text-white'>
+            <div
+              className='groupborder grid w-full gap-2 sm:grid-cols-2 md:grid-cols-3'
+              onMouseMove={onMouseMove}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                width='92'
-                height='32'
-                src='https://vercel.com/button'
-                alt='Deploy with Vercel'
-              />
-            </UnstyledLink>
+              {[...Array(6)].map((_, i) => (
+                <div
+                  key={i}
+                  ref={(el) => (cardsRef.current[i] = el)}
+                  className={clsx([
+                    'aspect-[7/5] rounded-xl',
+                    'bg-slate-700',
+                    'groupcontent relative',
+                  ])}
+                >
+                  <div
+                    data-id='card-border-gradient'
+                    className={clsx([
+                      'opacity-0 transition-opacity duration-300 group-[border:hover]:opacity-100',
+                      'bg-radial-follow-border [border-radius:inherit]',
+                      'absolute inset-0 z-[1]',
+                    ])}
+                  />
+                  <div
+                    data-id='card-content-gradient'
+                    className={clsx([
+                      'opacity-0 transition-opacity duration-300 group-[content:hover]:opacity-100',
+                      'bg-radial-follow [border-radius:inherit]',
+                      'pointer-events-none absolute inset-px z-[3]',
+                    ])}
+                  />
+                  <div
+                    className={clsx([
+                      'absolute inset-px z-[2]',
+                      'bg-[#131315] [border-radius:inherit]',
+                      'grid place-items-center',
+                    ])}
+                  >
+                    <p className='font-medium tracking-tight text-gray-400'>
+                      Content {i + 1}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className='mt-4 space-x-4'>
+              <UnderlineLink href='https://www.youtube.com/watch?v=htGfnF1zN4g&ab_channel=Hyperplexed'>
+                Tutorial Source ↗
+              </UnderlineLink>
+              <UnderlineLink href='https://linear.app/features'>
+                Design Source ↗
+              </UnderlineLink>
+            </div>
 
-            <footer className='absolute bottom-2 text-gray-700'>
+            <footer className='absolute bottom-2 text-slate-300'>
               © {new Date().getFullYear()} By{' '}
               <UnderlineLink href='https://theodorusclarence.com?ref=tsnextstarter'>
                 Theodorus Clarence

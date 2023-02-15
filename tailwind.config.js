@@ -25,6 +25,12 @@ module.exports = {
         },
         dark: '#222222',
       },
+      backgroundImage: {
+        'radial-follow':
+          'radial-gradient(800px circle at var(--cursorX) var(--cursorY), rgba(255, 255, 255, 0.06), transparent 40%)',
+        'radial-follow-border':
+          'radial-gradient(400px circle at var(--cursorX) var(--cursorY), rgba(255, 255, 255, 0.4) ,transparent 40%)',
+      },
       keyframes: {
         flicker: {
           '0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100%': {
