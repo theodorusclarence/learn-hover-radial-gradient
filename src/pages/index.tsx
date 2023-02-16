@@ -75,10 +75,13 @@ export default function HomePage() {
             </div>
             <div className='mt-4 space-x-4'>
               <UnderlineLink href='https://www.youtube.com/watch?v=htGfnF1zN4g&ab_channel=Hyperplexed'>
-                Tutorial Source ↗
+                Tutorial Credit ↗
               </UnderlineLink>
               <UnderlineLink href='https://linear.app/features'>
-                Design Source ↗
+                Design Credit ↗
+              </UnderlineLink>
+              <UnderlineLink href='https://github.com/theodorusclarence/learn-hover-radial-gradient'>
+                Source Code ↗
               </UnderlineLink>
             </div>
 
